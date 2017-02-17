@@ -5,6 +5,7 @@
  * @param? anchorVariant
  * @param? currentDepth
  * @param? currentURL
+ * @param? customListItems
  * @param? depth
  * @param? elementClasses
  * @param? linkClasses
@@ -42,6 +43,9 @@
 					</li>
 				{/if}
 			{/foreach}
+			{if $customListItems}
+				{$customListItems}
+			{/if}
 		</ul>
 	{/if}
 {/template}
