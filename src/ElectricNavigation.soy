@@ -5,6 +5,7 @@
  * @param? anchorVariant
  * @param? currentDepth
  * @param? currentURL
+ * @param? customListItems
  * @param? depth
  * @param? elementClasses
  * @param? linkClasses
@@ -22,6 +23,7 @@
 				{if not $page.hidden}
 					<li class="{$listItemClasses ?: ''}{$page.active ? ' ' + $localListItemActiveClasses : ''}">
 						{delcall ElectricNavigation.anchor variant="$localAnchorVariant" data="all"}
+							{param index: index($page) /}
 							{param page: $page /}
 						{/delcall}
 
@@ -41,6 +43,9 @@
 					</li>
 				{/if}
 			{/foreach}
+			{if $customListItems}
+				{$customListItems}
+			{/if}
 		</ul>
 	{/if}
 {/template}
