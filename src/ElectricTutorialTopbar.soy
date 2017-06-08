@@ -1,0 +1,27 @@
+{namespace ElectricTutorialTopbar}
+
+/**
+ * @param? elementClasses
+ * @param? logo
+ * @param page
+ */
+{template .render}
+	<nav class="topbar{$elementClasses ? ' ' + $elementClasses : ''}">
+		<button class="btn btn-transparent btn-icon" type="button" data-onclick="openNavigationMenu">
+			<span class="icon-16-menu"></span>
+		</button>
+
+		{if $logo}
+			{$logo}
+		{/if}
+
+		<h3 class="topbar-logo-text">{$page.tutorialTitle ?: ''}</h3>
+
+		<div class="time-remaining">
+			{if $page.timeRemaining}
+				<span class="icon icon-16-clock"></span>
+				<span class="name">{$page.timeRemaining ?: ''}</span>
+			{/if}
+		</div>
+	</nav>
+{/template}

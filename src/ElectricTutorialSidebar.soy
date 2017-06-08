@@ -1,0 +1,31 @@
+{namespace ElectricTutorialSidebar}
+
+/**
+ * @param page
+ * @param? navigationToggler
+ */
+{template .render}
+	<div class="sidebar-navigation{$navigationToggler ? ' open' : ''}">
+		<div class="sidebar-navigation-fade" data-onclick="closeNavigationMenu"></div>
+		<nav class="sidebar">
+			{call ElectricNavigation.render}
+				{param elementClasses: 'sidebar-list' /}
+				{param listItemClasses: 'sidebar-item' /}
+				{param anchorVariant: 'tutorial' /}
+				{param section: $page /}
+			{/call}
+		</nav>
+	</div>
+{/template}
+
+/**
+ * @param page
+ */
+{deltemplate ElectricNavigation.anchor variant="'tutorial'"}
+	<a class="sidebar-link{$page.active ? ' sidebar-link-selected' : ''}" href="{$page.url}" data-time="{$page.time}">
+		<span class="before"></span>
+		<span class="tutorial-step">{$page.weight}</span>
+		<span class="section-title">{$page.title}</span>
+		<span class="after"></span>
+	</a>
+{/deltemplate}

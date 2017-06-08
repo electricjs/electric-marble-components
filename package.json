@@ -41,6 +41,7 @@
     "electric": "^1.0.0"
   },
   "dependencies": {
-    "electric-base-components": "alpha"
+    "electric-base-components": "alpha",
+    "moment": "^2.18.1"
   }
 }
