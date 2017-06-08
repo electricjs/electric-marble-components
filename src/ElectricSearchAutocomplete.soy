@@ -7,9 +7,12 @@
 	<div class="page-autocomplete">
 		<div class="form-group">
 			<div class="input-inner-addon input-inner-addon-right">
+				<label for="search" class="sr-only">{$placeholder ?: ''}</label>
+
 				<input
 					autocomplete="off"
 					class="form-control"
+					id="search"
 					name="q"
 					placeholder="{$placeholder ?: ''}"
 					ref="input"
