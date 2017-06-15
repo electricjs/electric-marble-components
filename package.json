@@ -1,6 +1,6 @@
 {
   "name": "electric-marble-components",
-  "version": "2.0.0-alpha.7",
+  "version": "2.0.0",
   "description": "Components that are compatible with Marble for use with electric.js sites.",
   "jsnext:main": "src/all/components.js",
   "main": "lib/all/components.js",
@@ -30,9 +30,6 @@
     "url": "https://github.com/wedeploy/electric-marble-components/issues"
   },
   "homepage": "http://electricjs.com",
-  "publishConfig": {
-    "tag": "alpha"
-  },
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-preset-metal": "^4.1.0",
@@ -41,7 +38,7 @@
     "electric": "^1.0.0"
   },
   "dependencies": {
-    "electric-base-components": "alpha",
+    "electric-base-components": "^2.0.0",
     "moment": "^2.18.1"
   }
 }
