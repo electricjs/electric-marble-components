@@ -6,6 +6,8 @@ import ElectricNavigation from '../ElectricNavigation';
 import ElectricReadingProgress from '../ElectricReadingProgress';
 import ElectricSearch from '../ElectricSearch';
 import ElectricSearchAutocomplete from '../ElectricSearchAutocomplete';
+import ElectricTutorialSidebar from '../ElectricTutorialSidebar';
+import ElectricTutorialTopbar from '../ElectricTutorialTopbar';
 import ElectricUpdates from '../ElectricUpdates';
 
 export {
@@ -15,6 +17,8 @@ export {
 	ElectricReadingProgress,
 	ElectricSearch,
 	ElectricSearchAutocomplete,
+	ElectricTutorialSidebar,
+	ElectricTutorialTopbar,
 	ElectricUpdates
 };
 
