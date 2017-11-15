@@ -1,72 +1,60 @@
 {namespace ElectricNavigation}
 
-/**
- * @param section
- * @param? anchorVariant
- * @param? currentDepth
- * @param? currentURL
- * @param? depth
- * @param? elementClasses
- * @param? linkClasses
- * @param? listClasses
- * @param? listItemActiveClasses
- * @param? listItemClasses
- * @param? togglerClasses
- * @param? togglerLabel
- */
 {template .render}
-	{let $localAnchorVariant: $anchorVariant ?: 'basic' /}
-	{let $localCurrentDepth: $currentDepth ?: 0 /}
-	{let $localListItemActiveClasses: $listItemActiveClasses ?: 'active' /}
+	{@param section}
+	{@param? menuClasses: string}
 
 	{if $section.children}
-		<nav class="{$elementClasses ?: ''}">
-			<button class="{$togglerClasses ?: ''}">{$togglerLabel ?: 'Menu'}</button>
-			<ul class="{$listClasses ?: ''}">
-				{foreach $childId in $section.childIds}
-					{let $page: $section.children[$childId] /}
-
-					{if not $page.hidden}
-						<li class="{$listItemClasses ?: ''}{$page.active ? ' ' + $localListItemActiveClasses : ''}">
-							{delcall ElectricNavigation.anchor variant="$localAnchorVariant" data="all"}
-								{param index: index($childId) /}
-								{param page: $page /}
-							{/delcall}
-
-							{if not $depth or $localCurrentDepth + 1 < $depth}
-								{call ElectricNavigation.render}
-									{param anchorVariant: $localAnchorVariant /}
-									{param currentDepth: $localCurrentDepth + 1 /}
-									{param currentURL: $currentURL /}
-									{param depth: $depth /}
-									{param elementClasses: $elementClasses /}
-									{param linkClasses: $linkClasses /}
-									{param listClasses: $listClasses /}
-									{param listItemActiveClasses: $listItemActiveClasses /}
-									{param listItemClasses: $listItemClasses /}
-									{param togglerClasses: $togglerClasses /}
-									{param togglerLabel: $togglerLabel /}
-									{param section: $page /}
-								{/call}
-							{/if}
-						</li>
-					{/if}
-				{/foreach}
-			</ul>
+		<nav{$menuClasses ? } class="{$menuClasses}"{ : ''}>
+			{call .list data="all"}
 		</nav>
 	{/if}
 {/template}
 
-/**
- * @param page
- * @param? linkClasses
- */
+{template .list}
+	{@param section}
+	{@param? anchorVariant: string}
+	{@param? depth: int}
+	{@param? linkClasses: string}
+	{@param? listClasses: string}
+	{@param? listItemActiveClasses: string}
+	{@param? listItemClasses: string}
+	{@param? maxDepth: int}
+	{@param? menuClasses: string}
+
+	{let $localAnchorVariant: $anchorVariant ?: 'basic' /}
+	{let $localDepth: $depth ?: 0 /}
+
+	<ul{$listClasses ? } class="{$listClasses}"{ : ''}>
+		{foreach $childId in $section.childIds}
+			{let $page: $section.children[$childId] /}
+			{let $localListItemActiveClasses: $page.active ? $listItemActiveClasses ?: 'active' : '' /}
+			{let $localListItemClasses: $listItemClasses ? $listItemClasses + ' ' + $localListItemActiveClasses : $localListItemActiveClasses /}
+
+			{if not $page.hidden}
+				<li{$localListItemClasses ? } class="{$localListItemClasses}"{ : ''}>
+					{delcall ElectricNavigation.anchor variant="$localAnchorVariant" data="all"}
+						{param index: index($childId) /}
+					{/delcall}
+
+					{if not $maxDepth or $localDepth + 1 < $maxDepth}
+						<div{$menuClasses ? } class="{$menuClasses}"{ : ''}>
+							{call .list data="all"}
+						</div>
+					{/if}
+				</li>
+			{/if}
+		{/foreach}
+	</ul>
+{/template}
+
 {deltemplate ElectricNavigation.anchor variant="'basic'"}
+	{@param page}
+	{@param? linkClasses: string}
+
 	{if $page.url or $page.redirect}
-		<a class="{$linkClasses ?: ''}" href="{$page.redirect ?: $page.url}">
-			<span>{$page.title ?: 'Missing'}</span>
-		</a>
+		<a{$linkClasses ? } class="{$linkClasses}"{ : ''} href="{$page.redirect ?: $page.url}"><span>{$page.title ?: 'Missing'}</span></a>
 	{else}
-		<span class="{$linkClasses ?: ''}">{$page.title ?: 'Missing'}</span>
+		<span{$linkClasses ? } class="{$linkClasses}"{ : ''}><span>{$page.title ?: 'Missing'}</span></span>
 	{/if}
 {/deltemplate}

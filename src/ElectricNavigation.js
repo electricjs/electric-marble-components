@@ -8,24 +8,52 @@ import templates from './ElectricNavigation.soy';
 
 class ElectricNavigation extends ElectricNavigationBase {
   attached() {
-    this.toggler = new Toggler({
-      content: `.${this.listClasses}`,
-      header: `.${this.togglerClasses}`,
-      expandedClasses: 'topbar-list-expanded'
-    });
+    // compound selector list matching only the topmost electric navigation menus 
+    const menuSelector = this.menuClasses ? `nav.${this.menuClasses.split(/\s+/).join(',nav.')}` : 'nav';
+
+    // elements that are the topmost electric navigation menus
+    const menuElements = [].slice.call(document.querySelectorAll(menuSelector));
+
+    // array of toggles used by the document
+    this.togglers = menuElements.map(
+      menuElement => {
+        // list element is presumed to be the first child of the menu
+        const listElement = menuElement.firstChild;
+
+        // generated toggle element, inserted before the list element
+        const menuTogglerElement = document.createElement('button');
+
+        menuTogglerElement.className = this.togglerClasses || '';
+
+        menuElement.insertBefore(menuTogglerElement, listElement);
+
+        return new Toggler({
+          content: listElement,
+          header: menuTogglerElement,
+          collapsedClasses: this.collapsedClasses,
+          expandedClasses: this.menuExpandedClasses
+        });
+      }
+    );
   }
 
   disposed() {
-    let toggler = this.toggler;
+    let togglers = this.togglers;
 
-    if (toggler) {
-      toggler.dispose();
+    if (togglers.length) {
+      togglers.forEach(
+        toggler => {
+          toggler.dispose();
+        }
+      );
     }
   }
 }
 
 ElectricNavigation.STATE = {
+  section: {},
   listClasses: {},
+  menuClasses: {},
   togglerClasses: {}
 };
 
